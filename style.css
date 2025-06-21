@@ -153,6 +153,11 @@ body {
     word-wrap: break-word;
 }
 
+/* Logo input group mở rộng khi có logo */
+.option-group.logo-expanded {
+    grid-column: span 2;
+}
+
 .option-group label {
     display: flex;
     align-items: center;
@@ -873,6 +878,10 @@ body {
 .option-group select,
 .color-input-wrapper input,
 .file-info,
+.qr-info {
+    max-width: 200%;
+    box-sizing: border-box;
+}
 .logo-preview,
 .qr-info {
     max-width: 100%;

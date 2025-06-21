@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Tạo mã QR chuyên nghiệp</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzY2N0VFQSIvPgo8cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IndoaXRlIi8+CjxyZWN0IHg9IjYiIHk9IjYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiM2NjdFRUEiLz4KPHJlY3QgeD0iMjIiIHk9IjYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiM2NjdFRUEiLz4KPHJlY3QgeD0iNiIgeT0iMjIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiM2NjdFRUEiLz4KPHJlY3QgeD0iMTQiIHk9IjE0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjNjY3RUVBIi8+Cjwvc3ZnPgo=" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <i class="fas fa-qrcode header-icon"></i>
+                <h1>QR Code Generator</h1>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="generator-section">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="url-input">
+                            <i class="fas fa-link"></i>
+                            Nhập URL hoặc văn bản
+                        </label>
+                        <input type="text" id="url-input" placeholder="https://example.com" value="">
+                    </div>
+
+                    <div class="options-grid">
+                        <!-- Kích thước -->
+                        <div class="option-group">
+                            <label for="size-input">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                Kích thước (px)
+                            </label>
+                            <input type="range" id="size-input" min="100" max="2650" value="600">
+                            <span class="range-value" id="size-value">600px</span>
+                        </div>
+
+                        <!-- Mức sửa lỗi -->
+                        <div class="option-group">
+                            <label for="error-level">
+                                <i class="fas fa-shield-alt"></i>
+                                Mức sửa lỗi
+                            </label>
+                            <select id="error-level">
+                                <option value="L">Thấp (7%)</option>
+                                <option value="M" selected>Trung bình (15%)</option>
+                                <option value="Q">Cao (25%)</option>
+                                <option value="H">Rất cao (30%)</option>
+                            </select>
+                        </div>
+
+                        <!-- Màu nền -->
+                        <div class="option-group">                            <label for="bg-color">
+                                <i class="fas fa-fill-drip"></i>
+                                Màu nền
+                            </label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="bg-color" value="#ffffff">
+                                <input type="text" id="bg-color-text" value="#ffffff" placeholder="#ffffff" title="Mã màu hex">
+                            </div>
+                        </div>
+
+                        <!-- Màu mã QR -->
+                        <div class="option-group">                            <label for="fg-color">
+                                <i class="fas fa-palette"></i>
+                                Màu mã QR
+                            </label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="fg-color" value="#000000">
+                                <input type="text" id="fg-color-text" value="#000000" placeholder="#000000" title="Mã màu hex">
+                            </div>
+                        </div>
+
+                        <!-- Độ bo viền -->
+                        <div class="option-group">
+                            <label for="border-radius">
+                                <i class="fas fa-square"></i>
+                                Bo viền (px)
+                            </label>
+                            <input type="range" id="border-radius" min="0" max="50" value="0">
+                            <span class="range-value" id="border-value">0px</span>
+                        </div>
+
+                        <!-- Khoảng cách viền -->
+                        <div class="option-group">
+                            <label for="margin">
+                                <i class="fas fa-border-style"></i>
+                                Khoảng cách viền
+                            </label>
+                            <input type="range" id="margin" min="0" max="10" value="4">
+                            <span class="range-value" id="margin-value">4</span>
+                        </div>                        <!-- Logo nhúng -->
+                        <div class="option-group">
+                            <label for="logo-input">
+                                <i class="fas fa-image"></i>
+                                Logo nhúng
+                            </label>
+                            <input type="file" id="logo-input" accept="image/*">
+                            <div class="file-info" id="file-info"></div>
+                            <div class="logo-preview" id="logo-preview"></div>
+                        </div>                        <!-- Độ trong suốt logo -->
+                        <div class="option-group logo-opacity-group hidden" id="logo-opacity-group">
+                            <label for="logo-opacity">
+                                <i class="fas fa-adjust"></i>
+                                Độ trong suốt logo
+                            </label>
+                            <input type="range" id="logo-opacity" min="30" max="100" value="70">
+                            <span class="range-value" id="opacity-value">70%</span>
+                        </div>
+
+                        <!-- Vị trí logo -->
+                        <div class="option-group logo-position-group hidden" id="logo-position-group">
+                            <label for="logo-position">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Vị trí logo
+                            </label>
+                            <select id="logo-position">
+                                <option value="center">Ở giữa (Tâm)</option>
+                                <option value="corners">Cả 3 góc (Finder patterns)</option>
+                                <option value="top-left">Góc trên trái</option>
+                                <option value="top-right">Góc trên phải</option>
+                                <option value="bottom-left">Góc dưới trái</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="generate-btn" class="btn btn-primary">
+                            <i class="fas fa-magic"></i>
+                            Tạo mã QR
+                        </button>
+                        <button id="reset-btn" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i>
+                            Đặt lại
+                        </button>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <div class="preview-header">
+                        <h3><i class="fas fa-eye"></i> Xem trước</h3>
+                        <div class="preview-actions" style="max-width: 300px !important;">
+                            <button id="download-btn" class="btn btn-success" disabled>
+                                <i class="fas fa-download"></i>
+                                Tải xuống
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="qr-preview" id="qr-preview">
+                        <div class="placeholder">
+                            <i class="fas fa-qrcode"></i>
+                            <p>Mã QR sẽ hiển thị ở đây</p>
+                        </div>
+                    </div>
+
+                    <div class="qr-info hidden" id="qr-info">
+                        <h4>Thông tin mã QR:</h4>
+                        <div class="info-item">
+                            <span class="info-label">Nội dung:</span>
+                            <span class="info-value" id="info-content"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Kích thước:</span>
+                            <span class="info-value" id="info-size"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Mức sửa lỗi:</span>
+                            <span class="info-value" id="info-error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 QR Code Generator.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

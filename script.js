@@ -196,12 +196,16 @@ function handleLogoUpload(e) {
         logoImage = null;
         if (elements.fileInfo) {
             elements.fileInfo.innerHTML = '';
-        }
-          // Ẩn logo preview
+        }        // Ẩn logo preview
         const logoPreview = document.getElementById('logo-preview');
         if (logoPreview) {
             logoPreview.classList.remove('active');
             logoPreview.innerHTML = '';
+        }
+        
+        // Hiện lại logo input khi không có file
+        if (elements.logoInput) {
+            elements.logoInput.style.display = 'block';
         }
         
         // Ẩn control opacity
@@ -281,6 +285,12 @@ function displayLogoInfo(file, analysis) {
     
     // Hiển thị slider opacity
     showOpacityControl();
+    
+    // Mở rộng option-group để hiển thị toàn width
+    const logoOptionGroup = elements.logoInput.closest('.option-group');
+    if (logoOptionGroup) {
+        logoOptionGroup.classList.add('logo-expanded');
+    }
 }
 
 // Hiển thị control opacity và position
@@ -304,6 +314,17 @@ function hideOpacityControl() {
     if (elements.logoPositionGroup) {
         elements.logoPositionGroup.classList.add('hidden');
         elements.logoPositionGroup.classList.remove('show');
+    }
+    
+    // Thu nhỏ option-group về kích thước ban đầu khi không có logo
+    const logoOptionGroup = elements.logoInput?.closest('.option-group');
+    if (logoOptionGroup) {
+        logoOptionGroup.classList.remove('logo-expanded');
+    }
+    
+    // Hiện lại logo input khi ẩn control
+    if (elements.logoInput) {
+        elements.logoInput.style.display = 'block';
     }
     
     // Xóa thông tin analysis khi ẩn control
@@ -330,6 +351,11 @@ function showLogoPreview(file) {
     `;
     
     logoPreview.classList.add('active');
+    
+    // Ẩn logo input khi đã có hình
+    if (elements.logoInput) {
+        elements.logoInput.style.display = 'none';
+    }
 }
 
 // Xóa logo
@@ -342,6 +368,17 @@ function removeLogo() {
     if (logoPreview) {
         logoPreview.classList.remove('active');
         logoPreview.innerHTML = '';
+    }
+    
+    // Hiện lại logo input khi xóa logo
+    if (elements.logoInput) {
+        elements.logoInput.style.display = 'block';
+    }
+    
+    // Thu nhỏ option-group về kích thước ban đầu
+    const logoOptionGroup = elements.logoInput.closest('.option-group');
+    if (logoOptionGroup) {
+        logoOptionGroup.classList.remove('logo-expanded');
     }
     
     // Ẩn control opacity
